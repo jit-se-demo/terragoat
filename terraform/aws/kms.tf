@@ -1,4 +1,26 @@
 resource "aws_kms_key" "logs_key" {
+  policy = <<POLICY
+    {
+      "Version": "2012-10-17",
+      "Statement":[
+        {
+          "Sid":"AddCannedAcl",
+          "Effect":"Deny",
+          "Principal": {"AWS": [
+            "arn:aws:iam::<Specify your user here>:user/CMKUser"
+          ]},
+          "Action": [
+            "kms:Encrypt",
+            "kms:Decrypt",
+            "kms:ReEncrypt*",
+            "kms:GenerateDataKey*",
+            "kms:DescribeKey"
+          ],
+          "Resource":"*"
+        }
+      ]
+    }
+    POLICY
   # key does not have rotation enabled
   description = "${local.resource_prefix.value}-logs bucket key"
 
