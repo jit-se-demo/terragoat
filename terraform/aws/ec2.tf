@@ -81,7 +81,7 @@ resource "aws_security_group" "web-node" {
   vpc_id      = aws_vpc.web_vpc.id
 
   ingress {
-    from_port = 80
+    from_port = 23
     to_port   = 80
     protocol  = "tcp"
     cidr_blocks = [
